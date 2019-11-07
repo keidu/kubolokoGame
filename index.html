@@ -2,23 +2,41 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Kuboloko game</title>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.min.css"
+        integrity="sha256-dARYuC3pd0wa/7R4Hkt/sR2zfLHCgbnVAQ2sPwhNe0A=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/9c10748552.js" crossorigin="anonymous"></script>
+</head>
+<title>Kuboloko Game</title>
 </head>
 
-<body>
-    <canvas id="canvas"></canvas>
-    <script src="js/obstacles.js"></script>
-    <script src="js/bullets.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/background.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/index.js"></script>
-
+<body class="body">
+    <h1 class="background">Kuboloko Game</h1>
+    <h2 class="flex center">Instrucciones</h2>
+    <ul>
+        <div class="flex around">
+            <div class="rules">
+                <li>Cada viernes los Ironhackers vienen sedientos a llenar el local</li>
+                <li>Kuboloko es un local cutre asi que solo tienes una jarra</li>
+                <li>Si dejas que 3 Ironhackers se marchen enfadados pierdes la partida</li>
+            </div>
+        </div>
+        <div class="flex around keys">
+            <div class="flex">
+                <p class="padding bold"> SpaceBar</p>
+                <i class="fas fa-arrow-left"></i><i class="fas fa-arrow-up"></i><i class="fas fa-arrow-down"></i><i
+                    class="fas fa-arrow-right"></i>
+            </div>
+            </li>
+        </div>
+    </ul>
+    <div class="flex center">
+        <a href="./game.html">Start Game</a>
+    </div>
 </body>
 
 </html>

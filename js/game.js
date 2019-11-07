@@ -9,14 +9,22 @@ const Game = {
     customers2: [],
     customers3: [],
     customers4: [],
+    youWin: undefined,
+    stoppedBeer: undefined,
+    background: undefined,
     framesCounter: 0,
     score: undefined,
+    lifes: 3,
+    maxLifes: [],
+    totalTime: 30,
+    musicOff: true,
+    backgroundMusic: new Audio("./sound/tortura3.mp3"),
     keys: {
         GOUP: 38,
         GODOWN: 40,
         GOLEFT: 37,
         GORIGHT: 39,
-        SHOOT: 65,
+        SHOOT: 32,
     },
 
     init() {
@@ -35,41 +43,59 @@ const Game = {
         this.interval = setInterval(() => {
 
             this.framesCounter++;
-
-            //if (this.framesCounter > 99999) this.framesCounter = 1;
+            this.playLoop()
             this.framesCounter > 1000 ? this.framesCounter = 1 : null
             this.clear()
-            this.generateCustomers1()
-            this.generateCustomers2()
-            this.generateCustomers3()
-            this.generateCustomers4()
-            this.collision1()
-            this.collision2()
-            this.collision3()
-            this.collision4()
-            //this.getBeerCollision()
+            this.generateCustomers(190, this.customers1, Customer)
+            this.generateCustomers(350, this.customers2, Customer2)
+            this.generateCustomers(417, this.customers3, Customer3)
+            this.generateCustomers(150, this.customers4, Customer4)
+            this.collision(this.customers1)
+            this.collision(this.customers2)
+            this.collision(this.customers3)
+            this.collisionBar()
+            this.getBeerCollision()
             this.clearBullet()
             this.drawAll()
             this.moveAll()
-            this.clearCustomers1();
-            this.clearCustomers2();
-            this.clearCustomers3();
-            this.clearCustomers4();
-
+            this.chrono()
+            this.clearCustomers(this.customers1);
+            this.clearCustomers(this.customers2);
+            this.clearCustomers(this.customers3);
+            this.clearCustomers(this.customers4);
+            this.lifes <= 0 ? this.gameOver() : null
 
         }, 1000 / this.fps);
+
     },
+
     reset() {
-        this.background = new Background(this.ctx, this.width, this.height);
-        this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.keys);
+        this.background = new Background(this.ctx, this.width, this.height)
+        this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.keys)
+        this.hearts = this.maxLifes.push(new Lifes(this.ctx, this.width, this.height, 200),
+            new Lifes(this.ctx, this.width, this.height, 350),
+            new Lifes(this.ctx, this.width, this.height, 495))
+
     },
     drawAll() {
         this.background.draw();
-        this.player.draw(this.framesCounter);
+        this.player.draw(this.framesCounter)
         this.customers1.forEach(customer => customer.draw())
         this.customers2.forEach(customer => customer.draw())
         this.customers3.forEach(customer => customer.draw())
         this.customers4.forEach(customer => customer.draw())
+        this.maxLifes.forEach(lifes => lifes.draw())
+        this.drawTime()
+    },
+    playLoop() {
+        this.backgroundMusic.volume = 0.3
+        this.backgroundMusic.loop = true
+        this.backgroundMusic.play()
+    },
+    stopMusic() {
+        this.backgroundMusic.pause()
+        this.backgroundMusic.currentTime = 0
+
     },
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -88,95 +114,38 @@ const Game = {
         this.customers4.forEach(customer => customer.move())
     },
 
-    generateCustomers1() {
-        this.framesCounter % 250 == 0 ? this.customers1.push(new Customer(this.ctx, this.width, this.height)) : null
-    },
-    generateCustomers2() {
-        this.framesCounter % 250 == 0 ? this.customers2.push(new Customer2(this.ctx, this.width, this.height)) : null
-    },
-    generateCustomers3() {
-        this.framesCounter % 375 == 0 ? this.customers3.push(new Customer3(this.ctx, this.width, this.height)) : null
-    },
-    generateCustomers4() {
-        this.framesCounter % 200 == 0 ? this.customers4.push(new Customer4(this.ctx, this.width, this.height)) : null
+    generateCustomers(frames, custArray, custClass) {
+        this.framesCounter % frames == 0 ? custArray.push(new custClass(this.ctx, this.width, this.height)) : null
     },
 
-    clearCustomers1() {
-        this.customers1.forEach((cust, idx) => {
-            cust.posX >= 850 ? this.customers1.splice(idx, 1) : null
+    clearCustomers(customer) {
+        customer.forEach((cust, idx) => {
+            cust.posX >= 830 ? customer.splice(idx, 1) && this.lifes-- && this.maxLifes.pop() : null
         })
     },
 
-    clearCustomers2() {
-        this.customers2.forEach((cust, idx) => {
-            cust.posX >= 850 ? this.customers2.splice(idx, 1) : null
-        })
-    },
-
-    clearCustomers3() {
-        this.customers3.forEach((cust, idx) => {
-            cust.posX >= 850 ? this.customers3.splice(idx, 1) : null
-        })
-    },
-
-    clearCustomers4() {
-        this.customers4.forEach((cust, idx) => {
-            cust.posX >= 850 ? this.customers4.splice(idx, 1) : null
-        })
-    },
-
-    collision1() {
+    collision(custArray) {
         for (let j = 0; j < this.player.bullets.length; j++) {
-            for (let i = 0; i < this.customers1.length; i++) {
-                let cust = this.customers1[i]
+            for (let i = 0; i < custArray.length; i++) {
+                let cust = custArray[i]
                 let bull = this.player.bullets[j]
-                if (this.player.bullets.length > 0 && this.customers1.length > 0 &&
+                if (this.player.bullets.length > 0 && custArray.length > 0 &&
                     cust.posX + cust.width >= bull.posX &&
                     cust.posX <= bull.posX + bull.width &&
                     cust.posY + cust.height >= bull.posY &&
-                    cust.posY <= bull.posY + bull.height
-                ) {
-                    this.customers1.shift()
+                    cust.posY <= bull.posY + bull.height) {
+                    getBeer = document.createElement("audio")
+                    getBeer.src = "./sound/shout1.wav"
+                    getBeer.volume = 0.1
+                    getBeer.play()
+                    custArray.shift()
                     this.player.bullets.shift()
                 }
             }
         }
     },
-    collision2() {
-        for (let j = 0; j < this.player.bullets.length; j++) {
-            for (let i = 0; i < this.customers2.length; i++) {
-                let cust = this.customers2[i]
-                let bull = this.player.bullets[j]
-                if (this.player.bullets.length > 0 && this.customers2.length > 0 &&
-                    cust.posX + cust.width >= bull.posX &&
-                    cust.posX <= bull.posX + bull.width &&
-                    cust.posY + cust.height >= bull.posY &&
-                    cust.posY <= bull.posY + bull.height
-                ) {
-                    this.customers2.shift()
-                    this.player.bullets.shift()
-                }
-            }
-        }
-    },
-    collision3() {
-        for (let j = 0; j < this.player.bullets.length; j++) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                let cust = this.customers3[i]
-                let bull = this.player.bullets[j]
-                if (this.player.bullets.length > 0 && this.customers3.length > 0 &&
-                    cust.posX + cust.width >= bull.posX &&
-                    cust.posX <= bull.posX + bull.width &&
-                    cust.posY + cust.height >= bull.posY &&
-                    cust.posY <= bull.posY + bull.height
-                ) {
-                    this.customers3.shift()
-                    this.player.bullets.shift()
-                }
-            }
-        }
-    },
-    collision4() {
+
+    collisionBar() {
         for (let j = 0; j < this.player.bullets.length; j++) {
             for (let i = 0; i < this.customers4.length; i++) {
                 let cust = this.customers4[i]
@@ -185,23 +154,64 @@ const Game = {
                     cust.posX + cust.width >= bull.posX &&
                     cust.posX <= bull.posX + bull.width &&
                     cust.posY + cust.height >= bull.posY &&
-                    cust.posY <= bull.posY + bull.height
-                ) {
+                    cust.posY <= bull.posY + bull.height) {
+                    this.stoppedBeer = bull
+                    getBeer = document.createElement("audio")
+                    getBeer.src = "./sound/shout4.wav"
+                    getBeer.volume = 0.1
+                    getBeer.play()
                     this.customers4.shift()
-                    //this.player.bullets.shift()
                     this.player.bullets[j].velX = 0
-
                 }
             }
         }
     },
+
     getBeerCollision() {
-        let beer = this.player.bullets[j]
-        if (beer.posX + beer.width >= this.player.posX &&
-            beer.posY + beer.height >= this.player.posY &&
-            beer.posX <= this.player.posX + this.player.width &&
-            beer.posY <= this.player.posY + this.player.height) {
-            beer.shift()
+        if (this.stoppedBeer) {
+            if (this.stoppedBeer.posX + this.stoppedBeer.width > this.player.posX &&
+                this.stoppedBeer.posY + this.stoppedBeer.height >= this.player.posY &&
+                this.stoppedBeer.posY <= this.player.posY + this.player.height) {
+                this.player.bullets.forEach((bullet, idx) => {
+                    bullet == this.stoppedBeer ? this.player.bullets.splice(idx, 1) : null
+                })
+                this.stoppedBeer = undefined
+            }
         }
     },
+    drawTime() {
+        this.ctx.font = "bold 50px Helvetica, Arial, sans-serif";
+        this.ctx.fillStyle = "lightGrey"
+        this.ctx.fillText(Math.floor(this.totalTime), 1130, 110);
+    },
+    chrono() {
+        if (this.framesCounter % 60 == 0 && this.totalTime >= -1) {
+            this.totalTime--
+        }
+        else {
+            this.totalTime
+        }
+        if (this.totalTime == -1) {
+            this.youWin()
+        }
+    },
+    youWin() {
+        if (this.totalTime == -1) {
+            this.background.youWin()
+            clearInterval(this.interval)
+        }
+    },
+    gameOver() {
+        clearInterval(this.interval)
+        this.background.finalDraw()
+        this.stopMusic()
+        gameOverMusic = document.createElement("audio")
+        gameOverMusic.src = "./sound/gameOver.wav"
+        gameOverMusic.volume = 0.2
+        gameOverMusic.play()
+        torture2 = document.createElement("audio")
+        torture2.src = "./sound/gameOverMusic.mp3"
+        torture2.volume = 0.2
+        torture2.play()
+    }
 }

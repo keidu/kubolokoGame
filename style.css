@@ -1,0 +1,75 @@
+h1 {
+   font-size: 5em;
+   padding: 15px 0;
+   text-align: center;
+   color:#f28e1c ;
+}
+h2 {
+   font-size: 3em;
+   text-align: left;
+   text-transform: uppercase;
+   padding: 10px 0 10px 100px;
+   color: #f28e1c ;
+}
+ul{
+   padding: 10px 50px;
+}
+a{
+   text-align: center;
+   margin: 40px 0px ;
+   padding: 25px 40px;
+   width: 300px;
+   background-color:#f28e1c;
+   color: white;
+   font-size: 2em;
+   border-radius: 5px;
+   text-decoration: none;
+}
+a:hover{
+   background-color: white;
+   color: black;
+   border: 1px solid black;
+   text-decoration: none;
+}
+i{
+   padding: 10px ;
+}
+img{
+   width: 300px;
+}
+.flex{
+   display: flex;
+}
+.around{
+   justify-content: space-around;
+}
+.center{
+   justify-content: center
+}
+.padding{
+   padding: 10px;
+}
+.bold{
+   font-weight: bold;
+}
+
+.padding{
+   padding: 20px 0;
+}
+.keys{
+   font-size: 3em;
+   color: #f28e1c ;
+   list-style: none;
+}
+.rules{
+   font-size: 1.5em;
+   padding-left: 50px;
+   color: #f28e1c ;
+}
+.body {
+     background-image: url(./images/img_118586_el-kubo-loco_2_600.jpg);
+     background-repeat: no-repeat;
+     background-size: 100%;
+    /* background-color:lightslategray; */
+}
+
