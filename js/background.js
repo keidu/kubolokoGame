@@ -6,7 +6,7 @@ class Background {
         this.image = new Image()
         this.image.src = "./images/barra1.jpg"
         this.final = new Image()
-        this.final.src = "./images/untitled.png"
+        this.final.src = "./images/Untitled.png"
         this.win = new Image()
         this.win.src = "./images/youWin.jpg"
 
