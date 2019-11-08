@@ -85,7 +85,7 @@ class Player {
         this.movingSound.play()
     }
     goDown() {
-        this.posY <= window.innerHeight * 0.75 && this.posY <= window.innerWidth * 0.7 ? this.posY += this.vel : null
+        this.posY <= window.innerHeight * 0.65 && this.posY <= window.innerWidth * 0.7 ? this.posY += this.vel : null
         this.movingSound.volume = 0.1
         this.movingSound.play()
 
