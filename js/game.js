@@ -72,9 +72,9 @@ const Game = {
     reset() {
         this.background = new Background(this.ctx, this.width, this.height)
         this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.keys)
-        this.hearts = this.maxLifes.push(new Lifes(this.ctx, this.width, this.height, 200),
-            new Lifes(this.ctx, this.width, this.height, 350),
-            new Lifes(this.ctx, this.width, this.height, 495))
+        this.hearts = this.maxLifes.push(new Lifes(this.ctx, this.width, this.height, window.innerHeight * 0.30),
+            new Lifes(this.ctx, this.width, this.height, window.innerHeight * 0.52),
+            new Lifes(this.ctx, this.width, this.height, window.innerHeight * 0.75))
 
     },
     drawAll() {
@@ -182,7 +182,7 @@ const Game = {
     drawTime() {
         this.ctx.font = "bold 50px Helvetica, Arial, sans-serif";
         this.ctx.fillStyle = "lightGrey"
-        this.ctx.fillText(Math.floor(this.totalTime), 1130, 110);
+        this.ctx.fillText(Math.floor(this.totalTime), window.innerHeight * 1.68, window.innerHeight * 0.15);
     },
     chrono() {
         if (this.framesCounter % 60 == 0 && this.totalTime >= -1) {

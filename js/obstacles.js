@@ -5,10 +5,10 @@ class Customer {
         this.gameHeight = h
         this.image = new Image()
         this.image.src = "./images/cust1copy.png"
-        this.width = 120
-        this.height = 140
-        this.posX = 10
-        this.posY = 0
+        this.width = window.innerWidth * 0.1
+        this.height = window.innerWidth * 0.1
+        this.posX = window.innerHeight * 0.10
+        this.posY = window.innerHeight * 0.01
         this.velX = 4
         this.getBeer = document.createElement("audio")
         this.getBeer.src = "./sound/shout1.wav"
@@ -51,9 +51,9 @@ class Customer2 extends Customer {
         this.image.src = "./images/cust2copy.png"
         this.image.frames = 2
         this.image.framesIndex = 0
-        this.width = 100
-        this.height = 150
-        this.posY = 150
+        this.width = window.innerWidth * 0.1
+        this.height = window.innerWidth * 0.1
+        this.posY = window.innerWidth * 0.13
         this.velX = 2
 
 
@@ -66,7 +66,7 @@ class Customer3 extends Customer {
         this.image.src = "./images/cust3.png"
         this.image.frames = 2
         this.image.framesIndex = 0
-        this.posY = 305
+        this.posY = window.innerWidth * 0.25
         this.velX = 2
         this.getBeer.src = "./sound/shout3.wav"
 
@@ -79,9 +79,7 @@ class Customer4 extends Customer {
         this.image.src = "./images/cust4.png"
         this.image.frames = 2
         this.image.framesIndex = 0
-        this.width = 120
-        this.height = 150
-        this.posY = 440
+        this.posY = window.innerWidth * 0.37
         this.velX = 3
     }
 }
