@@ -70,22 +70,22 @@ class Player {
         }
     }
     goLeft() {
-        this.posY >= 450 && this.posX >= 100 ? this.posX -= this.vel : null
+        this.posY >= window.innerHeight * 0.6 && this.posX >= window.innerWidth * 0.1 ? this.posX -= this.vel : null
         this.movingSound.volume = 0.1
         this.movingSound.play()
     }
     goRight() {
-        this.posY >= 450 && this.posX <= 900 ? this.posX += this.vel : null
+        this.posY >= window.innerHeight * 0.6 && this.posX <= window.innerWidth * 0.7 ? this.posX += this.vel : null
         this.movingSound.volume = 0.1
         this.movingSound.play()
     }
     goUp() {
-        this.posY >= 80 && this.posX >= 900 ? this.posY -= this.vel : null
+        this.posY >= window.innerWidth * 0.1 && this.posX >= window.innerWidth * 0.7 ? this.posY -= this.vel : null
         this.movingSound.volume = 0.1
         this.movingSound.play()
     }
     goDown() {
-        this.posY <= 350 && this.posY <= 350 ? this.posY += this.vel : null
+        this.posY <= window.innerWidth * 0.3 && this.posY <= window.innerWidth * 0.7 ? this.posY += this.vel : null
         this.movingSound.volume = 0.1
         this.movingSound.play()
 
