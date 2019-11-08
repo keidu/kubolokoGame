@@ -5,12 +5,12 @@ class Player {
         this.gameHeight = h;
         this.image = new Image();
         this.image.src = "./images/barman.png";
-        this.width = 90;
-        this.height = 150;
+        this.width = window.innerWidth * 0.08
+        this.height = window.innerHeight * 0.2
         this.bullets = [];
         this.posX = this.gameWidth * 0.8;
-        this.posY = 40;
-        this.vel = 150;
+        this.posY = window.innerHeight * 0.06;
+        this.vel = window.innerHeight * 0.23;
         this.keys = keys;
         this.setListeners();
         this.image.frames = 2;
