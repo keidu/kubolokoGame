@@ -199,6 +199,12 @@ const Game = {
         if (this.totalTime == -1) {
             this.background.youWin()
             clearInterval(this.interval)
+            this.stopMusic()
+            victoryMusic = document.createElement("audio")
+            victoryMusic.src = "./sound/victoryMusic.mp3"
+            victoryMusic.volume = 0.2
+            victoryMusic.play()
+
         }
     },
     gameOver() {
