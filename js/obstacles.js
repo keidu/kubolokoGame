@@ -53,7 +53,7 @@ class Customer2 extends Customer {
         this.image.framesIndex = 0
         this.width = window.innerWidth * 0.1
         this.height = window.innerWidth * 0.1
-        this.posY = window.innerWidth * 0.13
+        this.posY = window.innerWidth * 0.12
         this.velX = 2
 
 
@@ -66,7 +66,7 @@ class Customer3 extends Customer {
         this.image.src = "./images/cust3.png"
         this.image.frames = 2
         this.image.framesIndex = 0
-        this.posY = window.innerWidth * 0.25
+        this.posY = window.innerWidth * 0.234
         this.velX = 2
         this.getBeer.src = "./sound/shout3.wav"
 
@@ -79,7 +79,7 @@ class Customer4 extends Customer {
         this.image.src = "./images/cust4.png"
         this.image.frames = 2
         this.image.framesIndex = 0
-        this.posY = window.innerWidth * 0.37
+        this.posY = window.innerWidth * 0.338
         this.velX = 3
     }
 }

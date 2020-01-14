@@ -182,7 +182,7 @@ const Game = {
     drawTime() {
         this.ctx.font = "bold 50px Helvetica, Arial, sans-serif";
         this.ctx.fillStyle = "lightGrey"
-        this.ctx.fillText(Math.floor(this.totalTime), window.innerHeight * 1.68, window.innerHeight * 0.15);
+        this.ctx.fillText(Math.floor(this.totalTime), window.innerHeight * 1.8, window.innerHeight * 0.17);
     },
     chrono() {
         if (this.framesCounter % 60 == 0 && this.totalTime >= -1) {
